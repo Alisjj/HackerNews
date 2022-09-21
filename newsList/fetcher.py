@@ -1,6 +1,7 @@
 import requests
 from .models import Item
-
+import datetime
+from django.utils.timezone import make_aware
 def fetch_items():
     conn = requests.get('https://hacker-news.firebaseio.com/v0/newstories.json?print=pretty')
     res = sorted(conn.json())
@@ -27,7 +28,8 @@ def get_obj(detail):
     type = detail.get("type")
     id = detail.get("id")
     by = detail.get("by")
-    time = detail.get("time")
+    timestamp = datetime.datetime.fromtimestamp(detail.get("time"))
+    time = make_aware(timestamp)
     url = detail.get("url")
     title = detail.get("title")
     text = detail.get("text")
@@ -51,7 +53,7 @@ def add_to_db():
         if details['type'] != 'comment' or 'deleted' not in details or 'dead' not in details:
             if not Item.objects.filter(id=details['id']).exists():
                 item_obj = get_obj(details)
-                t = Item.objects.create(**item_obj)
+                Item.objects.create(**item_obj)
                 if 'kids' in details:
                     kids = details['kids']
                     for kid in kids:
