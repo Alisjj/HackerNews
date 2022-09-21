@@ -1,15 +1,12 @@
-import json
 from django.shortcuts import render
-import requests
-from django.views.generic import View
-from django.http import HttpResponse
+from django.views import generic
 from .models import Item
 
 
 
 
-class ListNews(View):
-    def get(self, *args, **kwargs):
-        
+class ListNews(generic.ListView):
+    template_name = 'newsList/home.html'
+    context_object_name = "item_list"
+    queryset = Item.objects.all()
 
-        return HttpResponse()

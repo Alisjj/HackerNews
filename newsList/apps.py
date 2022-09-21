@@ -7,4 +7,4 @@ class NewslistConfig(AppConfig):
 
     def ready(self):
         from . import updater
-        updater.start
+        updater.start()
