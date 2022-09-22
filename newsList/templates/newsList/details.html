@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load humanize %}
 
 {% block title %}{% endblock %}
 {% block content %}
@@ -26,7 +27,8 @@
                 {% if item.text %}
                 <p class="leading-relaxed text-lg mb-4">{{item.text | safe}}</p>
                 {% endif %}
-                <p class="mt-5 leading-relaxed text-sm mb-4">Points: {{item.score}} |  Comments: {{item.descendants}} | {% if not item.fetched %} From Our API{% endif %} From Hacker News API </p>
+                <p class="mt-5 leading-relaxed text-sm">Points: {{item.score}} |  Comments: {{item.descendants}} | {% if not item.fetched %} From Our API{% endif %} From Hacker News API </p>
+                <p class="leading-relaxed text-sm mb-4">Posted: {{item.time}}</p>
             </div>
 
           </div>
@@ -38,6 +40,7 @@
                     {% for comment in item.item_set.all %}
                     <h2 class="text-lg font-medium text-gray-900 title-font mb-3">Comment By: {{comment.by}}</h2>
                     <p class="leading-relaxed">{{comment.text | safe}}</p>
+                    <p class="font-bold text-sm">{{comment.time | naturaltime}}</p>
                     <p class="text-indigo-500 inline-flex items-center mt-2 mb-5">Points: {{comment.score}}</p>
                     {% endfor %}
                 </div>

@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     # Local Apps
     'users.apps.UsersConfig',
     'newsList.apps.NewslistConfig',
+    'django.contrib.humanize',
 ]
 
 MIDDLEWARE = [
