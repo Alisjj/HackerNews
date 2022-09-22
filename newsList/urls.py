@@ -3,5 +3,5 @@ from . import views
 
 app_name = 'newsList'
 urlpatterns = [
-    path('', views.ListNews.as_view(), name="list")
+    path('<int:pk>/', views.NewsDetail.as_view(), name="news_details"),
 ]

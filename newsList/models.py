@@ -12,6 +12,7 @@ class Item(models.Model):
     url = models.CharField(max_length=300, null=True, blank=True)
     score = models.IntegerField(default=0, null=True, blank=True)
     parent = models.ForeignKey('self', on_delete=models.CASCADE, null=True)
+    fetched = models.BooleanField(default=False)
 
     def __str__(self):
         name = f'{self.type} {self.id}'
