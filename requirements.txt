@@ -12,6 +12,7 @@ click-plugins==1.1.1
 click-repl==0.2.0
 Deprecated==1.2.13
 Django==4.1.1
+djangorestframework==3.14.0
 idna==3.4
 kombu==5.2.4
 packaging==21.3

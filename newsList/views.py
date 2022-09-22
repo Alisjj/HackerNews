@@ -10,6 +10,7 @@ class ListNews(generic.ListView):
     template_name = 'newsList/home.html'
     context_object_name = "item_list"
     queryset = Item.objects.order_by('-time')
+    paginate_by = 10
 
 
 class NewsDetail(generic.DetailView):
@@ -30,13 +31,13 @@ def search(request):
             Q(text__icontains=query)
         ).distinct()
     context = {
-        'item_list': queryset
+        'item_list': queryset.order_by('-time')
     }
-    return render(request, 'newsList/home.html', context)
+    return render(request, 'newsList/filter.html', context)
 
 def filter(request, type):
     queryset = Item.objects.filter(type=type)
     context = {
-        'item_list': queryset
+        'item_list': queryset.order_by('-time')
     }
-    return render(request, 'newsList/home.html', context)
+    return render(request, 'newsList/filter.html', context)

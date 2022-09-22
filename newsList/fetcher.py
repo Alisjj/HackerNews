@@ -16,6 +16,8 @@ def fetch_item_by_id(item):
         print(res)
     return res
 
+
+
 def add_kid(kid):
     comment = fetch_item_by_id(kid)
     parent = Item.objects.get(id=comment['parent'])
