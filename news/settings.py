@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 from pathlib import Path
 import os
+from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -43,9 +44,20 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'newsList.apps.NewslistConfig',
     'django.contrib.humanize',
+
+    # Third Party
+    'rest_framework',
+    'rest_framework.authtoken',
+    'dj_rest_auth',
+    'django.contrib.sites',
+    'allauth',
+    'allauth.socialaccount',
+    'allauth.account',
+    'dj_rest_auth.registration',
 ]
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -53,6 +65,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'users.middleware.MoveJWTRefreshCookieIntoTheBody',
 ]
 
 ROOT_URLCONF = 'news.urls'
@@ -75,6 +88,61 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'news.wsgi.application'
 
+SITE_ID=1
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=20),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=7),    
+    'ROTATE_REFRESH_TOKENS': False, # IMPORTANT
+    'BLACKLIST_AFTER_ROTATION': False, # IMPORTANT
+    'UPDATE_LAST_LOGIN': True,
+}
+
+REST_FRAMEWORK = {
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+        'dj_rest_auth.jwt_auth.JWTCookieAuthentication',
+    ],
+    'DEFAULT_SCHEMA_CLASS': [
+        'rest_framework.schemas.coreapi.AutoSchema'
+        ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated'
+    ]
+}
+
+
+REST_SESSION_LOGIN = False
+REST_USE_JWT = True
+JWT_AUTH_COOKIE = 'jwt-access-token'           # you can set these
+JWT_AUTH_REFRESH_COOKIE = 'jwt-refresh-token'  # to anything 
+JWT_AUTH_SECURE = True
+
+REST_AUTH_REGISTER_SERIALIZERS = {
+    'REGISTER_SERIALIZER': 'users.api.serializers.CustomRegistration',
+}
+
+REST_AUTH_SERIALIZERS = {
+    
+    'USER_DETAILS_SERIALIZER': 'users.api.serializers.CustomUserDetailsSerializer',
+}
+
+CORS_ORIGIN_WHITELIST  = (
+    "http://localhost:8000",
+    "http://localhost:3000",
+)
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_EMAIL_VERIFICATION = True
+ACCOUNT_CONFIRM_EMAIL_ON_GET = True
+
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
@@ -82,10 +150,10 @@ WSGI_APPLICATION = 'news.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',
-        'USER': 'postgres',
-        'PASSWORD': 'postgres',
-        'HOST': 'db',
+        'NAME': 'newsdb',
+        'USER': 'newsuser',
+        'PASSWORD': 'sjj1234',
+        'HOST': 'localhost',
         'PORT': 5432
     }
 }
@@ -118,7 +186,7 @@ AUTH_USER_MODEL = 'users.User'
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Africa/Lagos'
 
 USE_I18N = True
 

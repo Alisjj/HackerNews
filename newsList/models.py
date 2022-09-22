@@ -1,10 +1,13 @@
 from django.db import models
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 # Create your models here.
 class Item(models.Model):
-    id = models.IntegerField(primary_key=True, unique=True, editable=False)
+    id = models.CharField(primary_key=True, unique=True, editable=False, max_length=20)
     type = models.CharField(max_length=20)
-    by = models.CharField(max_length=50)
+    by = models.CharField(max_length=50, null=True)
     time = models.DateTimeField(blank=True, null=True)
     text = models.TextField(max_length=200, null=True, blank=True)
     title = models.CharField(max_length=200, null=True, blank=True)

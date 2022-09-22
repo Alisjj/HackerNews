@@ -27,7 +27,7 @@
                 {% if item.text %}
                 <p class="leading-relaxed text-lg mb-4">{{item.text | safe}}</p>
                 {% endif %}
-                <p class="mt-5 leading-relaxed text-sm">Points: {{item.score}} |  Comments: {{item.descendants}} | {% if not item.fetched %} From Our API{% endif %} From Hacker News API </p>
+                <p class="mt-5 leading-relaxed text-sm">Points: {{item.score}} |  Comments: {{item.descendants}} | {% if not item.fetched %} From Our API{% else %} From Hacker News API {% endif %}</p>
                 <p class="leading-relaxed text-sm mb-4">Posted: {{item.time}}</p>
             </div>
 

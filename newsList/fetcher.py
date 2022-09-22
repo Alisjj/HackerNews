@@ -29,7 +29,7 @@ def add_kid(kid):
 
 def get_obj(detail):
     type = detail.get("type")
-    id = detail.get("id")
+    id = str(detail.get("id"))
     by = detail.get("by")
     timestamp = datetime.datetime.fromtimestamp(detail.get("time"))
     time = make_aware(timestamp)

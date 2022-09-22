@@ -3,7 +3,6 @@
 {% block title %}{% endblock %}
 {% block content %}
 
-{% if is_paginated %}
 <section class="text-gray-600 body-font overflow-hidden">
     <div class="container px-5 py-24 mx-auto">
       <div class="-my-8 divide-y-2 divide-gray-100">
@@ -33,22 +32,8 @@
             </div>
           {% endif %}
         {% endfor %}
-        <div class="flex flex-row space-x-4">
-          {% if page_obj.has_next %}
-          <div>
-            <a href="?page={{page_obj.next_page_number}}" class="font-bold">Next</a>
-          </div>
-          {% endif %}
-          <p> Page Number: {{page_obj.number}}</p>
-          {% if page_obj.has_previous %}
-          <div>
-            <a href="?page={{page_obj.previous_page_number}}" class="font-bold">Previous</a>
-          </div>
-          {% endif %}
-        </div>
       </div>
     </div>
   </section>
-{% endif %}
 
 {% endblock %}
