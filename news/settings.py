@@ -149,12 +149,8 @@ ACCOUNT_CONFIRM_EMAIL_ON_GET = True
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'newsdb',
-        'USER': 'newsuser',
-        'PASSWORD': 'sjj1234',
-        'HOST': 'localhost',
-        'PORT': 5432
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'db.sqlite3',
     }
 }
 
